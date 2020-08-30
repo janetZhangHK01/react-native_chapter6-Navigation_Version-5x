@@ -11,8 +11,13 @@ import {
 
 import CenterMessage from '../components/CenterMessage'
 import { colors } from '../theme'
+import { TodosContext } from '../context'
+
 
 class City extends React.Component {
+    static contextType = TodosContext;
+    
+
     static navigationOptions = (props) => {
     const { city } = this.props.route.params;
       return {
@@ -40,12 +45,16 @@ class City extends React.Component {
         name: this.state.name,
         info: this.state.info
       }
-      this.props.screenProps.addLocation(location, city)
+      this.context.addLocation(location, city)
+      // this.props.screenProps.addLocation(location, city)
       this.setState({ name: '', info: '' })
     }
     render() {
       const { city } = this.props.route.params;
       console.log('props: ', this.props)
+      
+      const value = this.context
+      console.log(value)
       return (
         <View style={{ flex: 1 }}>
           <ScrollView contentContainerStyle={[!city.locations.length && { flex: 1 }]}>

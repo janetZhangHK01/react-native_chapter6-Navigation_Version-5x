@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 
 import Cities from './Cities/Cities';
 import City from './Cities/City';
@@ -8,18 +9,8 @@ import { colors } from './theme';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { TodosConsumer } from "./context"
 
-// const CitiesNav = createStackNavigator({
-//     Cities: {screen: Cities},
-//     City: {screen: City}
-//     }, {
-//         navigatitionOptions: {
-//             headerStyle: {
-//                 backgroundColor: colors.primary
-//             },
-//             headerTintColor: '#fff'
-//         }
-//     });
 
 const Stack = createStackNavigator();
 function myStack() {
@@ -27,7 +18,7 @@ function myStack() {
         <Stack.Navigator
         screenOptions={{
             headerTintColor: 'white',
-            headerStyle: { backgroundColor: colors.primary}
+            headerStyle: { backgroundColor: '#1976D2'}
         }}>
             <Stack.Screen name="Cities" component={Cities}/>
             <Stack.Screen name="City" component={City}/>
@@ -38,16 +29,21 @@ function myStack() {
 const Tab = createBottomTabNavigator();
 function Tabs() {
     return (
-        <Tab.Navigator>
-            <Tab.Screen name="Cities" component={myStack}/>
-            <Tab.Screen name="AddCity" component={AddCity}/>
-        </Tab.Navigator>
-    )
+        <TodosConsumer>
+        {(value) => {
+            return (
+                <NavigationContainer>
+                    <Tab.Navigator>
+                        <Tab.Screen name="Cities" component={myStack}/>
+                        <Tab.Screen name="AddCity" component={AddCity}/>
+                    </Tab.Navigator>
+                </NavigationContainer>
+            );
+        }}
+        </TodosConsumer>
+
+    );
 }
-// const Tabs = createBottomTabNavigator({
-//     Cities: {screen: CitiesNav},
-//     AddCity: {screen: AddCity}
-// })
 
 export default Tabs;
 

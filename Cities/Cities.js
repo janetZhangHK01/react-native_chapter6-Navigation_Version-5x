@@ -9,6 +9,7 @@ import {
 
   import CenterMessage from '../components/CenterMessage'
   import { colors } from '../theme'
+  import { TodosContext } from '../context'
 
   export default class Cities extends React.Component {
     static navigationOptions = {
@@ -22,8 +23,17 @@ import {
     navigate = (item) => {
       this.props.navigation.navigate('City', { city: item })
     }
+    
+    static contextType = TodosContext;
+
+    // static valueeee = this.context;
+
     render() {
-      const { screenProps: { cities } } = this.props
+      const value = this.context;
+      console.log(value);
+
+      const cities = value.cities;
+
       return (
         <ScrollView  contentContainerStyle={[!cities.length && { flex: 1 }]}>
           <View style={[!cities.length && { justifyContent: 'center', flex: 1 }]}>

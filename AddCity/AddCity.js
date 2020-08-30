@@ -9,8 +9,11 @@ import {
 
 import { v4 as uuidv4 } from 'uuid';
 import { colors } from '../theme';
+import { TodosContext } from '../context';
 
 export default class AddCity extends React.Component {
+    static contextType = TodosContext;
+
     state = {
         city: '',
         country: ''
@@ -26,12 +29,12 @@ export default class AddCity extends React.Component {
             id: uuidv4(),
             locations: []
         }
-        this.props.screenProps.addCity(city)
+        this.context.addCity(city)
         this.setState({
             city: '',
             country: ''
         }, () => {
-            this.props.navigation.navigete('Cities')
+            this.props.navigation.navigate('Cities')
         })
     }
     render() {
@@ -40,13 +43,13 @@ export default class AddCity extends React.Component {
                 <Text style={styles.heading}>Cities</Text>
                 <TextInput
                     placeholder='City name'
-                    onChangeText {...val => this.onChangeText('city', val)} 
+                    onChangeText = {val => this.onChangeText('city', val)} 
                     style={styles.input}
                     value={this.state.city}
                 />
                 <TextInput
                     placeholder='Country name'
-                    onChangeText {...val => this.onChangeText('city', val)} 
+                    onChangeText = {val => this.onChangeText('country', val)} 
                     style={styles.input}
                     value={this.state.country}
                 />
